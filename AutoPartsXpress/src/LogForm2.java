@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,7 +28,7 @@ public class LogForm2 extends JFrame {
                 try {
                     MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
                     MongoDatabase database = mongoClient.getDatabase("Usuarios");
-                    MongoCollection<Document> usuarios = database.getCollection("AdminYCajer");
+                    MongoCollection<Document> usuarios = database.getCollection("Admin");
 
                     Document query = new Document("Usuario", user)
                             .append("Contrasenia", pass);
@@ -35,6 +36,13 @@ public class LogForm2 extends JFrame {
 
                     if (result != null) {
                         JOptionPane.showMessageDialog(mainPanel2, "Credenciales correctas",null,JOptionPane.INFORMATION_MESSAGE);
+                        Adminform adminform = new Adminform();
+                        adminform.setVisible(true);
+                        adminform.setSize(300,600);
+                        adminform.setPreferredSize(new Dimension(500,320));
+                        adminform.pack();
+                        adminform.setLocationRelativeTo(null);
+                        dispose();
                     }else{
                         JOptionPane.showMessageDialog(mainPanel2, "Credenciales incorrectos",null,JOptionPane.ERROR_MESSAGE);
                     }
