@@ -1,12 +1,14 @@
-public class Cajero {
-    String UsuarioCaj = "AutopartesCaja01";
-    String ContraseñaCaj = "UserCaja0119072024";
+import org.bson.Document;
+
+public class Cajero extends Main {
+    String UsuarioCaj;
+    String ContraseniaCaj;
 
     public Cajero() {}
 
-    public Cajero(String usuarioCaj, String contraseñaCaj) {
+    public Cajero(String usuarioCaj, String contraseniaCaj) {
         UsuarioCaj = usuarioCaj;
-        ContraseñaCaj = contraseñaCaj;
+        ContraseniaCaj = contraseniaCaj;
     }
 
     public String getUsuarioCaj() {
@@ -17,11 +19,15 @@ public class Cajero {
         UsuarioCaj = usuarioCaj;
     }
 
-    public String getContraseñaCaj() {
-        return ContraseñaCaj;
+    public String getContraseniaCaj() {
+        return ContraseniaCaj;
     }
 
-    public void setContraseñaCaj(String contraseñaCaj) {
-        ContraseñaCaj = contraseñaCaj;
+    public void setContraseniaCaj(String contraseniaCaj) {
+        ContraseniaCaj = contraseniaCaj;
+    }
+    @Override
+    public Document toDocument(){
+        return new Document("Usuario",UsuarioCaj).append("Contrasenia",ContraseniaCaj);
     }
 }

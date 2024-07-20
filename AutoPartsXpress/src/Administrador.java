@@ -1,12 +1,14 @@
-public class Administrador {
-    String UsuarioAdm = "AutopartesLuis1245/";
-    String ContraseñaAdm = "UserAuto19072024";
+import org.bson.Document;
+
+public class Administrador extends Main {
+    String UsuarioAdm;
+    String ContraseniaAdm;
 
     public Administrador() {}
 
-    public Administrador(String usuarioAdm, String contraseñaAdm) {
+    public Administrador(String usuarioAdm, String contraseniaAdm) {
         UsuarioAdm = usuarioAdm;
-        ContraseñaAdm = contraseñaAdm;
+        ContraseniaAdm = contraseniaAdm;
     }
 
     public String getUsuarioAdm() {
@@ -17,11 +19,16 @@ public class Administrador {
         UsuarioAdm = usuarioAdm;
     }
 
-    public String getContraseñaAdm() {
-        return ContraseñaAdm;
+    public String getContraseniaAdm() {
+        return ContraseniaAdm;
     }
 
-    public void setContraseñaAdm(String contraseñaAdm) {
-        ContraseñaAdm = contraseñaAdm;
+    public void setContraseniaAdm(String contraseniaAdm) {
+        ContraseniaAdm = contraseniaAdm;
+    }
+
+    @Override
+    public Document toDocument() {
+        return new Document("Usuario",UsuarioAdm).append("Contrasenia",ContraseniaAdm);
     }
 }
