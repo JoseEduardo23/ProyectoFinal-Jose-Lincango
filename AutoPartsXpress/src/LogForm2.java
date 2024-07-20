@@ -1,9 +1,17 @@
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LogForm2 extends JFrame {
     public JPanel mainPanel2;
     public JTextField UserAdmin;
-    public JTextField PassAdmin;
+    public JPasswordField PassAdmin;
     public JButton ingresarButton;
 
     public LogForm2() {
@@ -11,5 +19,31 @@ public class LogForm2 extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(mainPanel2);
         pack();
+        ingresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String user = UserAdmin.getText();
+                String pass = PassAdmin.getText();
+                try {
+                    MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+                    MongoDatabase database = mongoClient.getDatabase("Usuarios");
+                    MongoCollection<Document> usuarios = database.getCollection("AdminYCajer");
+
+                    Document query = new Document("Usuario", user)
+                            .append("Contrasenia", pass);
+                    Document result = usuarios.find(query).first();
+
+                    if (result != null) {
+                        JOptionPane.showMessageDialog(mainPanel2, "Credenciales correctas",null,JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(mainPanel2, "Credenciales incorrectos",null,JOptionPane.ERROR_MESSAGE);
+                    }
+
+                }catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos",null,JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 }

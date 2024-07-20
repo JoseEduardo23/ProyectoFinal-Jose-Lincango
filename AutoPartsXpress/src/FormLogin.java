@@ -19,7 +19,7 @@ public class FormLogin extends JFrame {
         setSize(300,300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        //Ajuste del icono
         ImageIcon imagen1 = new ImageIcon(getClass().getResource("/mecanico.png"));
         Image image = imagen1.getImage();
         Image tamanio = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
