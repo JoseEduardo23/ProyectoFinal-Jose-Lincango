@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,8 +26,6 @@ public class FormLogin extends JFrame {
         Image tamanio = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         ImageIcon tamanio2 = new ImageIcon(tamanio);
         iconLabel.setIcon(tamanio2);
-
-
 
         B1Ingreso.addActionListener(new ActionListener() {
             @Override
