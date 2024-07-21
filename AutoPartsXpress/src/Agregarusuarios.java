@@ -5,10 +5,12 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
 //Elaboracion de la clase para Agregar ususarios cajeros
 public class Agregarusuarios extends JFrame {
     public JTextField CIIN;
@@ -30,7 +32,9 @@ public class Agregarusuarios extends JFrame {
         setTitle("Agregar usuarios");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(AgregarPanel);
-        pack();
+        setSize(new Dimension(600, 350));
+        setLocationRelativeTo(null);
+        setVisible(true);
 
         MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
         MongoDatabase database = mongoClient.getDatabase("Usuarios");
@@ -60,14 +64,41 @@ public class Agregarusuarios extends JFrame {
                 System.out.println("Ingreso: " + ingreso);
 
                 Cajero cajero = new Cajero(usuario,contrasenia,cedula,nombre,apellido,edad,correo,rol,ingreso);
-                cajeroList.add(cajero);
-
-                for (Cajero caj : cajeroList) {
-                    Document cajeroDoc = caj.toDocument();
-                    usuarios.insertOne(cajeroDoc);
+                if(!isCajeroEmpty(cajero)){
+                    cajeroList.add(cajero);
+                    for (Cajero caj : cajeroList) {
+                        Document cajeroDoc = caj.toDocument();
+                        usuarios.insertOne(cajeroDoc);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"El formulario esta vacio",null,JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
 
+        Bregreso1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Adminform adminform = new Adminform();
+                adminform.setVisible(true);
+                adminform.setSize(300,600);
+                adminform.setPreferredSize(new Dimension(500,320));
+                adminform.pack();
+                adminform.setLocationRelativeTo(null);
+                dispose();
+            }
+        });
     }
+    public boolean isCajeroEmpty(Cajero cajero) {
+        return (cajero.getUsuarioCaj() == null || cajero.getUsuarioCaj().isEmpty()) ||
+                (cajero.getContraseniaCaj() == null || cajero.getContraseniaCaj().isEmpty()) ||
+                (cajero.getCedulaCaj() == null || cajero.getCedulaCaj().isEmpty()) ||
+                (cajero.getNombreCaj() == null || cajero.getNombreCaj().isEmpty()) ||
+                (cajero.getApellidoCaj() == null || cajero.getApellidoCaj().isEmpty()) ||
+                (cajero.getEdadCaj() == null || cajero.getEdadCaj().isEmpty()) ||
+                (cajero.getCorreoCaj() == null || cajero.getCorreoCaj().isEmpty()) ||
+                (cajero.getRolCaj() == null || cajero.getRolCaj().isEmpty()) ||
+                (cajero.getIngresoCaj() == null || cajero.getIngresoCaj().isEmpty());
+    }
+
 }

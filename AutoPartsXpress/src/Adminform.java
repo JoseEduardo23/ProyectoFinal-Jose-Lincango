@@ -12,6 +12,7 @@ public class Adminform extends JFrame {
     public JButton Button2;
     public JPanel Panel1;
     public JLabel Image1;
+    public JButton regresarButton;
 
     public Adminform (){
         setTitle("Administracion");
@@ -47,13 +48,23 @@ public class Adminform extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Agregarusuarios frame = new Agregarusuarios();
-                frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(300,600);
-                frame.setSize(new Dimension(500,320));
-                frame.pack();
+                frame.setSize(new Dimension(550,350));
                 frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
                 dispose();
+            }
+        });
+        regresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FormLogin formLogin = new FormLogin();
+                formLogin.setDefaultCloseOperation(EXIT_ON_CLOSE);
+                formLogin.setSize(new Dimension(300,250));
+                formLogin.setLocationRelativeTo(null);
+                formLogin.setVisible(true);
+                dispose();
+
             }
         });
     }
