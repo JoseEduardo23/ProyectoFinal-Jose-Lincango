@@ -1,7 +1,7 @@
 import org.bson.Document;
 
 import java.time.Instant;
-
+//Modificacion de la clase cajeros
 public class Cajero extends Main {
     String UsuarioCaj;
     String ContraseniaCaj;

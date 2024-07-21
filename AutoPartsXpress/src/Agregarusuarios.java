@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
+//Elaboracion de la clase para Agregar ususarios cajeros
 public class Agregarusuarios extends JFrame {
     public JTextField CIIN;
     public JTextField nomIN;
