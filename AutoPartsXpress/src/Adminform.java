@@ -10,9 +10,12 @@ public class Adminform extends JFrame {
     public JButton Button1;
     public JButton Button3;
     public JButton Button2;
-    public JPanel Panel1;
-    public JLabel Image1;
+    //public JPanel Panel1;
+    //public JLabel Image1;
     public JButton regresarButton;
+    private JLabel icon2;
+    private JLabel icon3;
+    private JLabel icon4;
 
     public Adminform (){
         setTitle("Administracion");
@@ -33,16 +36,25 @@ public class Adminform extends JFrame {
         Button3.setBorder(borde3);
         Button3.setPreferredSize(new Dimension(150,20));
 
-        //Panel
-        Border borde4 = BorderFactory.createLineBorder(null,1,true);
-        Panel1.setBorder(borde4);
-        //Imagen
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/administrador.png"));
-        Image image = imageIcon.getImage();
-        Image Tamanio = image.getScaledInstance(150,150,Image.SCALE_SMOOTH);
-        ImageIcon imageIcon1 = new ImageIcon(Tamanio);
-        Image1.setIcon(imageIcon1);
 
+        //Imagen
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/en-stock.png"));
+        Image image = imageIcon.getImage();
+        Image Tamanio = image.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        ImageIcon imageIcon1 = new ImageIcon(Tamanio);
+        icon2.setIcon(imageIcon1);
+
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/ventas.png"));
+        Image image1 = imagen.getImage();
+        Image Tamanio1 = image1.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        ImageIcon imageIcon2 = new ImageIcon(Tamanio1);
+        icon3.setIcon(imageIcon2);
+
+        ImageIcon imagen3 = new ImageIcon(getClass().getResource("/nueva-cuenta.png"));
+        Image image3 = imagen3.getImage();
+        Image Tamanio3 = image3.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        ImageIcon imageIcon3 = new ImageIcon(Tamanio3);
+        icon4.setIcon(imageIcon3);
 
         Button3.addActionListener(new ActionListener() {
             @Override

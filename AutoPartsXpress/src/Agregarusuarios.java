@@ -44,7 +44,7 @@ public class Agregarusuarios extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String usuario = nomIN.getText() + apelIN.getText() + "Xpress";
-                String contrasenia = FechIN.getText() + "AutoPartsXpress";
+                String contrasenia = CIIN.getText()+ "AutoParts";
                 String cedula = CIIN.getText();
                 String nombre = nomIN.getText();
                 String apellido = apelIN.getText();
@@ -69,6 +69,14 @@ public class Agregarusuarios extends JFrame {
                     for (Cajero caj : cajeroList) {
                         Document cajeroDoc = caj.toDocument();
                         usuarios.insertOne(cajeroDoc);
+                        JOptionPane.showMessageDialog(null,"Usuario Ingresado",null,JOptionPane.INFORMATION_MESSAGE);
+                        CIIN.setText("");
+                        nomIN.setText("");
+                        apelIN.setText("");
+                        edadIN.setText("");
+                        correoIN.setText("");
+                        rolIN.setText("");
+                        FechIN.setText("");
                     }
                 }else{
                     JOptionPane.showMessageDialog(null,"El formulario esta vacio",null,JOptionPane.INFORMATION_MESSAGE);
@@ -82,7 +90,7 @@ public class Agregarusuarios extends JFrame {
                 Adminform adminform = new Adminform();
                 adminform.setVisible(true);
                 adminform.setSize(300,600);
-                adminform.setPreferredSize(new Dimension(500,320));
+                adminform.setPreferredSize(new Dimension(700,440));
                 adminform.pack();
                 adminform.setLocationRelativeTo(null);
                 dispose();
