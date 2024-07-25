@@ -66,6 +66,15 @@ public class LogForm3 extends JFrame {
                         CajerUser.setText("");
                         CajerPass.setText("");
 
+                        Cajerform cajerform = new Cajerform();
+                        cajerform.setVisible(true);
+                        cajerform.setSize(600,600);
+                        cajerform.setPreferredSize(new Dimension(600,400));
+                        cajerform.pack();
+                        cajerform.setLocationRelativeTo(null);
+                        dispose();
+
+
                     } else{
                         JOptionPane.showMessageDialog(mainPanel3,"Credenciales incorrectas", null,JOptionPane.WARNING_MESSAGE);
 

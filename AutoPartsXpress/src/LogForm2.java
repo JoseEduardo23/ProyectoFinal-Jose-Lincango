@@ -16,6 +16,7 @@ public class LogForm2 extends JFrame {
     public JButton ingresarButton;
     private JLabel icon;
     private JPanel PanelA;
+    private JButton salirButton;
 
     public LogForm2() {
         setTitle("Inicio de sesion Administradores");
