@@ -1,4 +1,5 @@
 import com.mongodb.client.*;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class Stock extends JFrame {
     private JLabel txt3;
     private JLabel txt2;
     private JLabel txt1;
+    private JButton regresarButton;
     private DefaultTableModel modelo1;
 
     public Stock() {
@@ -30,6 +32,7 @@ public class Stock extends JFrame {
         stockPanel.setLayout(null);
         modificarButton.setBounds(90, 130, 100, 25);
         buscarButton.setBounds(210, 130, 100, 25);
+        regresarButton.setBounds(30,321,90,20);
 
         Bcodprod.setBounds(120, 31, 150, 20);
         Mstoockprod.setBounds(120, 83, 150, 20);
@@ -55,7 +58,18 @@ public class Stock extends JFrame {
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                    actualizarStock();
+                }
+        });
+        regresarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AgregarProductos agregarProductos = new AgregarProductos();
+                agregarProductos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                agregarProductos.setSize(650,700);
+                agregarProductos.setLocationRelativeTo(null);
+                agregarProductos.setVisible(true);
+                dispose();
             }
         });
     }
@@ -103,6 +117,39 @@ public class Stock extends JFrame {
         } catch (Exception ef) {
             ef.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al buscar el producto", null, JOptionPane.WARNING_MESSAGE);
+        }
+        }
+        private void actualizarStock(){
+        String codprod = Bcodprod.getText().trim();
+        String nomprod = Bnombprod.getText().trim();
+        String Nstock = Mstoockprod.getText().trim();
+
+        if (Nstock.isEmpty()){
+            JOptionPane.showMessageDialog(this,"Ingrese el nuevo stock",null, JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        try(MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")){
+            MongoDatabase stock = mongoClient.getDatabase("Usuarios");
+            MongoCollection<Document> collection = stock.getCollection("Productos");
+
+            Document query1 = new Document();
+            if(!codprod.isEmpty()){
+                query1.append("IDproducto",codprod);
+            }if(!nomprod.isEmpty()){
+                query1.append("Producto",nomprod);
+            }
+            Document update = new Document("$set",new Document("Stock",Nstock).append("Cantidad",Integer.parseInt(Nstock)));
+            UpdateResult result = collection.updateMany(query1,update);
+
+            if(result.getMatchedCount()>0){
+                JOptionPane.showMessageDialog(null,"Stock actualizado",null,JOptionPane.INFORMATION_MESSAGE);
+                buscarProducto();
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontro el producto",null,JOptionPane.ERROR_MESSAGE);
+            }
+        }catch (Exception ef){
+            ef.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Error al actualizar",null,JOptionPane.WARNING_MESSAGE);
         }
     }
 

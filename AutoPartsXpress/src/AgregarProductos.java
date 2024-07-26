@@ -151,7 +151,7 @@ public class AgregarProductos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Stock stock = new Stock();
                 stock.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                stock.setSize(new Dimension(650,700));
+                stock.setSize(new Dimension(400,380));
                 stock.setLocationRelativeTo(null);
                 stock.setVisible(true);
                 dispose();
