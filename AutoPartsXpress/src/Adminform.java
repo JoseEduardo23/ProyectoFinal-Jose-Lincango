@@ -10,8 +10,8 @@ public class Adminform extends JFrame {
     public JButton Button1;
     public JButton Button3;
     public JButton Button2;
-    //public JPanel Panel1;
-    //public JLabel Image1;
+    public JPanel Panel1;
+    public JLabel Image1;
     public JButton regresarButton;
     private JLabel icon2;
     private JLabel icon3;
@@ -79,6 +79,20 @@ public class Adminform extends JFrame {
 
             }
         });
+        Button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AgregarProductos Aproducts = new AgregarProductos();
+                Aproducts.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                Aproducts.setSize(new Dimension(650,700));
+                Aproducts.setLocationRelativeTo(null);
+                Aproducts.setVisible(true);
+                dispose();
+            }
+        });
+    }
+    public static void main(String[] args) {
+        new Adminform();
     }
 
 }

@@ -19,7 +19,7 @@ public class Transaccion extends JFrame {
     private JTextField TotalF;
     private JTextField Cantproducto;
     private JTextField Prproducto;
-    private JButton Fbutton;
+    private JButton Gbutton;
     private JLabel icon1;
     private JTextField Dvendedor;
     private JLabel Dv;
@@ -96,7 +96,8 @@ public class Transaccion extends JFrame {
         tcan.setBounds(262,503,150,20);
         tprec.setBounds(506,503,150,20);
 
-        Fbutton.setBounds(350,630,100,25);
+        //Botones
+        Gbutton.setBounds(350,630,100,25);
         Rbutton.setBounds(93,630,100,25);
 
 
@@ -109,6 +110,12 @@ public class Transaccion extends JFrame {
                 cajerform.setLocationRelativeTo(null);
                 cajerform.setVisible(true);
                 dispose();
+
+            }
+        });
+        Gbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
             }
         });

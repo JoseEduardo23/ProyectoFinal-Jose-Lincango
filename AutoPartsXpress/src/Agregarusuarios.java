@@ -45,6 +45,7 @@ public class Agregarusuarios extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String usuario = nomIN.getText() + apelIN.getText() + "Xpress";
                 String contrasenia = CIIN.getText()+ "AutoParts";
+                String contraseniaH = ClaveSegura.hashPasword(contrasenia);
                 String cedula = CIIN.getText();
                 String nombre = nomIN.getText();
                 String apellido = apelIN.getText();
@@ -54,7 +55,7 @@ public class Agregarusuarios extends JFrame {
                 String ingreso = FechIN.getText();
 
                 System.out.println("Usuario: " + usuario);
-                System.out.println("Contrasenia: " + contrasenia);
+                System.out.println("Contrasenia (hash): " + contraseniaH);
                 System.out.println("Cedula: " + cedula);
                 System.out.println("Nombre: " + nombre);
                 System.out.println("Apellido: " + apellido);
