@@ -113,7 +113,7 @@ public class Stock extends JFrame {
                         producto.getPrecio()
                 });
             }
-
+            //s
         } catch (Exception ef) {
             ef.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al buscar el producto", null, JOptionPane.WARNING_MESSAGE);
