@@ -57,7 +57,7 @@
         </constraints>
         <properties>
           <background color="-6380315"/>
-          <text value="Reposrtes de venta"/>
+          <text value="Reportes de venta"/>
         </properties>
       </component>
       <component id="15c4c" class="javax.swing.JLabel" binding="icon3">

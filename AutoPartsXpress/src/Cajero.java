@@ -1,7 +1,7 @@
 import org.bson.Document;
-
 import java.time.Instant;
-//Modificacion de la clase cajeros
+
+
 public class Cajero extends Main {
     String UsuarioCaj;
     String ContraseniaCaj;
@@ -13,8 +13,6 @@ public class Cajero extends Main {
     String RolCaj;
     String IngresoCaj;
     String timestamp;
-
-    public Cajero(String ciinText, String text, String apelINText, String edadINText, String correoINText, String rolINText, String fechINText) {}
 
     public Cajero(String usuarioCaj, String contraseniaCaj, String cedulaCaj, String nombreCaj, String apellidoCaj, String edadCaj, String correoCaj, String rolCaj, String ingresoCaj) {
         UsuarioCaj = usuarioCaj;

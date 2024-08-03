@@ -2,6 +2,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class Agregarusuarios extends JFrame {
     public JTextField correoIN;
     public JTextField rolIN;
     public JButton BIngreso;
-    public JButton Bmostrar;
+    public JButton Beliminar;
     public JButton Bregreso1;
     public JTextField FechIN;
     public JPanel AgregarPanel;
@@ -46,6 +47,7 @@ public class Agregarusuarios extends JFrame {
                 String usuario = nomIN.getText() + apelIN.getText() + "Xpress";
                 String contrasenia = CIIN.getText()+ "AutoParts";
                 String contraseniaH = ClaveSegura.hashPasword(contrasenia);
+
                 String cedula = CIIN.getText();
                 String nombre = nomIN.getText();
                 String apellido = apelIN.getText();
@@ -65,20 +67,23 @@ public class Agregarusuarios extends JFrame {
                 System.out.println("Ingreso: " + ingreso);
 
                 Cajero cajero = new Cajero(usuario,contrasenia,cedula,nombre,apellido,edad,correo,rol,ingreso);
+
                 if(!isCajeroEmpty(cajero)){
                     cajeroList.add(cajero);
-                    for (Cajero caj : cajeroList) {
-                        Document cajeroDoc = caj.toDocument();
-                        usuarios.insertOne(cajeroDoc);
-                        JOptionPane.showMessageDialog(null,"Usuario Ingresado",null,JOptionPane.INFORMATION_MESSAGE);
-                        CIIN.setText("");
-                        nomIN.setText("");
-                        apelIN.setText("");
-                        edadIN.setText("");
-                        correoIN.setText("");
-                        rolIN.setText("");
-                        FechIN.setText("");
-                    }
+
+                    Document cajeroDoc = cajero.toDocument();
+
+                    usuarios.insertOne(cajeroDoc);
+
+                    JOptionPane.showMessageDialog(null,"Usuario Ingresado",null,JOptionPane.INFORMATION_MESSAGE);
+                    CIIN.setText("");
+                    nomIN.setText("");
+                    apelIN.setText("");
+                    edadIN.setText("");
+                    correoIN.setText("");
+                    rolIN.setText("");
+                    FechIN.setText("");
+
                 }else{
                     JOptionPane.showMessageDialog(null,"El formulario esta vacio",null,JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -95,6 +100,26 @@ public class Agregarusuarios extends JFrame {
                 adminform.pack();
                 adminform.setLocationRelativeTo(null);
                 dispose();
+            }
+        });
+        Beliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //DELETE
+                try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
+                    MongoDatabase database = mongoClient.getDatabase("Usuarios");
+                    MongoCollection<Document> collection = database.getCollection("Cajeros");
+
+                    Document filtro = new Document("Cedula", CIIN.getText());
+                    DeleteResult resultado = collection.deleteOne(filtro);
+                    if(resultado.getDeletedCount()>0) {
+                        JOptionPane.showMessageDialog(null, "Usuario eliminado", null, JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("Documentos borrados: " + resultado.getDeletedCount());
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Usuario no encontrado",null, JOptionPane.WARNING_MESSAGE);
+                    }
+
+                }
             }
         });
     }

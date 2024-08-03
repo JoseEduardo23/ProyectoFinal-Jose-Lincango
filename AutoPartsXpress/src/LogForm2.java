@@ -47,6 +47,7 @@ public class LogForm2 extends JFrame {
 
                     Document query = new Document("Usuario", user)
                             .append("Contrasenia", pass);
+
                     Document result = usuarios.find(query).first();
 
                     if (result != null) {

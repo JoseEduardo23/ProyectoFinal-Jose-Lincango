@@ -4,10 +4,10 @@ public class PRODUCTOS {
     private String nomprod;
     private String idprod;
     private int cantidad;
-    private String stock;
+    private int stock;
     private double precio;
 
-    public PRODUCTOS(String nomprod, String idprod, int cantidad, String stock, double precio) {
+    public PRODUCTOS(String nomprod, String idprod, int cantidad, int stock, double precio) {
         this.nomprod = nomprod;
         this.idprod = idprod;
         this.cantidad = cantidad;
@@ -27,7 +27,7 @@ public class PRODUCTOS {
         return cantidad;
     }
 
-    public String getStock() {
+    public int getStock() {
         return stock;
     }
 

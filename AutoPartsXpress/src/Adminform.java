@@ -90,6 +90,17 @@ public class Adminform extends JFrame {
                 dispose();
             }
         });
+        Button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Facturas facturas = new Facturas();
+                facturas.setDefaultCloseOperation(EXIT_ON_CLOSE);
+                facturas.setSize(new Dimension(400,350));
+                facturas.setLocationRelativeTo(null);
+                facturas.setVisible(true);
+                dispose();
+            }
+        });
     }
     public static void main(String[] args) {
         new Adminform();

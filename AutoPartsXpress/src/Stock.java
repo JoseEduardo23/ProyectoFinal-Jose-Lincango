@@ -32,7 +32,7 @@ public class Stock extends JFrame {
         stockPanel.setLayout(null);
         modificarButton.setBounds(90, 130, 100, 25);
         buscarButton.setBounds(210, 130, 100, 25);
-        regresarButton.setBounds(30,321,90,20);
+        regresarButton.setBounds(30, 321, 90, 20);
 
         Bcodprod.setBounds(120, 31, 150, 20);
         Mstoockprod.setBounds(120, 83, 150, 20);
@@ -58,15 +58,15 @@ public class Stock extends JFrame {
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    actualizarStock();
-                }
+                actualizarStock();
+            }
         });
         regresarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AgregarProductos agregarProductos = new AgregarProductos();
                 agregarProductos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                agregarProductos.setSize(650,700);
+                agregarProductos.setSize(650, 700);
                 agregarProductos.setLocationRelativeTo(null);
                 agregarProductos.setVisible(true);
                 dispose();
@@ -102,7 +102,7 @@ public class Stock extends JFrame {
                         document.getString("Producto"),
                         document.getString("IDproducto"),
                         document.getInteger("Cantidad", 0),
-                        document.getString("Stock"),
+                        document.getInteger("Stock", 0),
                         document.getDouble("Precio")
                 );
                 modelo1.addRow(new Object[]{
@@ -113,47 +113,58 @@ public class Stock extends JFrame {
                         producto.getPrecio()
                 });
             }
-            //s
         } catch (Exception ef) {
             ef.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al buscar el producto", null, JOptionPane.WARNING_MESSAGE);
         }
-        }
-        private void actualizarStock(){
+    }
+
+    private void actualizarStock() {
         String codprod = Bcodprod.getText().trim();
         String nomprod = Bnombprod.getText().trim();
         String Nstock = Mstoockprod.getText().trim();
 
-        if (Nstock.isEmpty()){
-            JOptionPane.showMessageDialog(this,"Ingrese el nuevo stock",null, JOptionPane.INFORMATION_MESSAGE);
+        if (Nstock.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el nuevo stock", null, JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        try(MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")){
+        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
             MongoDatabase stock = mongoClient.getDatabase("Usuarios");
             MongoCollection<Document> collection = stock.getCollection("Productos");
 
             Document query1 = new Document();
-            if(!codprod.isEmpty()){
-                query1.append("IDproducto",codprod);
-            }if(!nomprod.isEmpty()){
-                query1.append("Producto",nomprod);
+            if (!codprod.isEmpty()) {
+                query1.append("IDproducto", codprod);
             }
-            Document update = new Document("$set",new Document("Stock",Nstock).append("Cantidad",Integer.parseInt(Nstock)));
-            UpdateResult result = collection.updateMany(query1,update);
+            if (!nomprod.isEmpty()) {
+                query1.append("Producto", nomprod);
+            }
 
-            if(result.getMatchedCount()>0){
-                JOptionPane.showMessageDialog(null,"Stock actualizado",null,JOptionPane.INFORMATION_MESSAGE);
-                buscarProducto();
-            }else{
-                JOptionPane.showMessageDialog(null, "No se encontro el producto",null,JOptionPane.ERROR_MESSAGE);
+            Document foundDocument = collection.find(query1).first();
+
+            if (foundDocument != null) {
+                int stockactual = foundDocument.getInteger("Stock", 0);
+                int añadirStock = Integer.parseInt(Nstock);
+                int nuevoStock = stockactual + añadirStock;
+
+                Document update = new Document("$set", new Document("Stock", nuevoStock).append("Cantidad", nuevoStock));
+                UpdateResult result = collection.updateMany(query1, update);
+
+                if (result.getMatchedCount() > 0) {
+                    JOptionPane.showMessageDialog(null, "Stock actualizado", null, JOptionPane.INFORMATION_MESSAGE);
+                    buscarProducto();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontro el producto", null, JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro el producto", null, JOptionPane.WARNING_MESSAGE);
             }
-        }catch (Exception ef){
-            ef.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Error al actualizar",null,JOptionPane.WARNING_MESSAGE);
+            }catch(Exception ef){
+                ef.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al actualizar", null, JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        public static void main (String[]args){
+            new Stock();
         }
     }
-
-    public static void main(String[] args) {
-        new Stock();
-    }
-}

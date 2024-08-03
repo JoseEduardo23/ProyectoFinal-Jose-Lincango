@@ -98,7 +98,7 @@ public class AgregarProductos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String Producto = Nomprod.getText();
                 String Codigo = Codprod.getText();
-                String Stock = Stockprod.getText();
+                int Stock = Integer.parseInt(Stockprod.getText());
                 double precio;
                 int Cantidad;
 
@@ -162,7 +162,7 @@ public class AgregarProductos extends JFrame {
     private boolean isPRODUCTOSEmpty(PRODUCTOS productos) {
         return productos.getNomprod() == null || productos.getNomprod().isEmpty() ||
                 productos.getIDprod() == null || productos.getIDprod().isEmpty() ||
-                productos.getStock() == null || productos.getStock().isEmpty() ||
+                productos.getStock() == 0 ||
                 productos.getPrecio() == 0.0 ||
                 productos.getCantidad() == 0;
     }

@@ -3,7 +3,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import javax.print.Doc;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,6 +26,7 @@ public class LogForm3 extends JFrame {
         setContentPane(mainPanel3);
         pack();
 
+        //Diseño
         ImageIcon imagen1 = new ImageIcon(getClass().getResource("/iniciar-sesion.png"));
         Image image = imagen1.getImage();
         Image tamanio = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
@@ -35,6 +36,7 @@ public class LogForm3 extends JFrame {
         Regresar.setPreferredSize(new Dimension(100,10));
         CajerPass.setPreferredSize(new Dimension(150,30));
         CajerUser.setPreferredSize(new Dimension(150,30));
+
 
         Regresar.addActionListener(new ActionListener() {
             @Override
@@ -47,6 +49,7 @@ public class LogForm3 extends JFrame {
                 dispose();
             }
         });
+
         BotonCaj.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,6 +62,7 @@ public class LogForm3 extends JFrame {
 
                     Document query1 = new Document("Usuario", user)
                             .append("Contrasenia", pass);
+
                     Document result1 = usuario.find(query1).first();
 
                     if(result1 !=null){
