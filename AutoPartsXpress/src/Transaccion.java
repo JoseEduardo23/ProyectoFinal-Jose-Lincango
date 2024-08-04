@@ -60,7 +60,19 @@ public class Transaccion extends JFrame {
     private JLabel tcan;
     private JLabel tprec;
     private JButton Rbutton;
-    private JButton calcularButton;
+    private JLabel icon2;
+    private JLabel icon3;
+    private JLabel icon4;
+    private JLabel Nv;
+    private JLabel Ev;
+    private JLabel Pic1;
+    private JLabel Pic2;
+    private JLabel Pic3;
+    private JLabel Pic4;
+    private JLabel Stock1;
+    private JLabel Stock2;
+    private JLabel Stock3;
+    private JLabel Stock4;
     private Facturas facturasFrame;
 
     private NumberFormat formatter = new DecimalFormat("#0.00");
@@ -79,13 +91,48 @@ public class Transaccion extends JFrame {
 
         Mpanel.setLayout(null);
 
-        // Imagen
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/IMG/punto-de-venta.png"));
+        Pic1.setBounds(550,15,150,100);
+        Pic2.setBounds(680,15,150,100);
+        Pic3.setBounds(550,180,150,100);
+        Pic4.setBounds(680,180,150,100);
+
+        Stock1.setBounds(550, 140,150,100);
+        Stock2.setBounds(680, 140,150,100);
+        Stock3.setBounds(550, 310,150,100);
+        Stock4.setBounds(680, 310,150,100);
+
+        StockLabels();
+
+        // Imagenes
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/IMG/alternador.png"));
         Image image = imageIcon.getImage();
-        Image Tamanio = image.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        Image Tamanio = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         ImageIcon imageIcon1 = new ImageIcon(Tamanio);
         icon1.setIcon(imageIcon1);
-        icon1.setBounds(500, 100, 300, 300);
+        icon1.setBounds(550, 50, 150, 150);
+
+        ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/IMG/amortiguador.png"));
+        Image image2 = imageIcon2.getImage();
+        Image Tamanio2 = image2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon imageIco2 = new ImageIcon(Tamanio2);
+        icon2.setIcon(imageIco2);
+        icon2.setBounds(680, 50, 150, 150);
+
+        ImageIcon imageIcon3 = new ImageIcon(getClass().getResource("/IMG/bujia.png"));
+        Image image3= imageIcon3.getImage();
+        Image Tamanio3 = image3.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon imageIco3 = new ImageIcon(Tamanio3);
+        icon3.setIcon(imageIco3);
+        icon3.setBounds(550, 220, 150, 150);
+
+
+        ImageIcon imageIcon4 = new ImageIcon(getClass().getResource("/IMG/filtro-de-aceite.png"));
+        Image image4 = imageIcon4.getImage();
+        Image Tamanio4 = image4.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon imageIco4 = new ImageIcon(Tamanio4);
+        icon4.setIcon(imageIco4);
+        icon4.setBounds(680, 220, 150, 150);
+
 
         // Cajero
         Nvendedor.setBounds(93, 50, 150, 20);
@@ -93,6 +140,8 @@ public class Transaccion extends JFrame {
         Dvendedor.setBounds(93, 100, 150, 20);
         Tvendedor.setBounds(93, 150, 150, 20);
         Cvendedor.setBounds(318, 100, 150, 20);
+        Nv.setBounds(15,47,150,20);
+        Ev.setBounds(260,47,150,20);
         Tv.setBounds(40, 147, 150, 20);
         Cv.setBounds(268, 98, 150, 20);
         Dv.setBounds(10, 98, 150, 20);
@@ -170,12 +219,32 @@ public class Transaccion extends JFrame {
 
                     //Reducir stock
 
-                    boolean stockReduced = stockManager.reducirStock(Nproducto.getText(),Integer.parseInt(Cantproducto.getText()));
-
+                    int stockReduced = stockManager.reducirStock(Nproducto.getText(),Integer.parseInt(Cantproducto.getText()));
+                    if (stockReduced != -1){
+                        StockLabels();
+                    }else{
+                        JOptionPane.showMessageDialog(null,"No se puede reducir el stock",null,JOptionPane.WARNING_MESSAGE);
+                    }
                     // Generar PDF
                     createPdf();
 
                     JOptionPane.showMessageDialog(null, "Factura generada y guardada exitosamente", null, JOptionPane.INFORMATION_MESSAGE);
+
+                    Nvendedor.setText("");
+                    Tvendedor.setText("");
+                    Evendedor.setText("");
+                    Cvendedor.setText("");
+                    Ncliente.setText("");
+                    Dcliente.setText("");
+                    Ecliente.setText("");
+                    Ccliente.setText("");
+                    Tcliente.setText("");
+                    Nproducto.setText("");
+                    Cantproducto.setText("");
+                    Prproducto.setText("");
+                    Total.setText("");
+                    TotalF.setText("");
+
 
                     // Agregar la factura a la tabla
                     Object[] factura = {
@@ -196,6 +265,7 @@ public class Transaccion extends JFrame {
                     JOptionPane.showMessageDialog(null, "Error al guardar en MongoDB", null, JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
+
             }
         });
 
@@ -234,7 +304,9 @@ public class Transaccion extends JFrame {
             int cantidad = Integer.parseInt(Cantproducto.getText());
             double precio = Double.parseDouble(Prproducto.getText());
             double total = cantidad * precio;
-            TotalF.setText(formatter.format(total));
+            double totalF = total * 1.15;
+            Total.setText(formatter.format(total));
+            TotalF.setText(formatter.format(totalF));
         } catch (NumberFormatException e) {
             TotalF.setText("0.00");
         }
@@ -268,6 +340,14 @@ public class Transaccion extends JFrame {
 
         document.add(table);
         document.close();
+    }
+
+    private void StockLabels(){
+        Stock1.setText("Stock: " + stockManager.obtenerStock("Alternador"));
+        Stock2.setText("Stock: " + stockManager.obtenerStock("Amortiguador"));
+        Stock3.setText("Stock: " + stockManager.obtenerStock("Bujias"));
+        Stock4.setText("Stock: " + stockManager.obtenerStock("Filtro de aceite"));
+
     }
 
     public static void main(String[] args) {

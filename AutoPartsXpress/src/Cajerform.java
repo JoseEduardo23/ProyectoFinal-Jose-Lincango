@@ -22,9 +22,6 @@ public class Cajerform extends JFrame {
         setVisible(true);
 
         //Botones
-        Border borde1 = BorderFactory.createLineBorder(null,1,true);
-        Button1.setBorder(borde1);
-        Button1.setPreferredSize(new Dimension(150,20));
 
         Border borde2 = BorderFactory.createLineBorder(null,1,true);
         Button2.setBorder(borde2);
@@ -35,11 +32,6 @@ public class Cajerform extends JFrame {
         Button3.setPreferredSize(new Dimension(150,20));
 
         //Imagenes
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/IMG/bolsa-de-la-compra.png"));
-        Image image = imageIcon.getImage();
-        Image Tamanio = image.getScaledInstance(30,30,Image.SCALE_SMOOTH);
-        ImageIcon imageIcon1 = new ImageIcon(Tamanio);
-        icon1.setIcon(imageIcon1);
 
         ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/IMG/factura.png"));
         Image image2 = imageIcon2.getImage();

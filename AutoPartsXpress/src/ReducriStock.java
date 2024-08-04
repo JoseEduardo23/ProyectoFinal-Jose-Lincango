@@ -16,7 +16,7 @@ public class ReducriStock extends JFrame {
         database = mongoClient.getDatabase("Usuarios");
         productosCollection = database.getCollection("Productos");
     }
-    public boolean reducirStock(String Nproducto, int cantidad){
+    public int reducirStock(String Nproducto, int cantidad){
         Document productoQuery = new Document("Producto",Nproducto);
         Document productoDoc = productosCollection.find(productoQuery).first();
 
@@ -27,12 +27,23 @@ public class ReducriStock extends JFrame {
             if (nuevoStock > 0){
                 Document update = new Document("$set",new Document("Stock", nuevoStock));
                 productosCollection.updateOne(productoQuery, update);
-                return true;
+                return nuevoStock;
             }else{
-                return false;
+                return -1;
             }
         }else{
-            return false;
+            return -1;
         }
     }
+    public int obtenerStock(String Nproducto){
+        Document productoQuery = new Document("Producto", Nproducto);
+        Document productoDoc = productosCollection.find(productoQuery).first();
+
+        if (productoDoc != null){
+            return productoDoc.getInteger("Stock",0);
+        }else{
+            return 0;
+        }
+    }
+
 }
