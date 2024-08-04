@@ -68,5 +68,3 @@ public class FormLogin extends JFrame {
         });
     }
 }
-
-

@@ -42,7 +42,7 @@ public class Stock extends JFrame {
         txt2.setBounds(65, 55, 150, 20);
         txt3.setBounds(65, 81, 150, 20);
 
-        modelo1 = new DefaultTableModel(new Object[]{"Producto", "Codigo", "Cantidad", "Stock", "Precio"}, 0);
+        modelo1 = new DefaultTableModel(new Object[]{"Producto", "Codigo", "Stock", "Precio"}, 0);
         tabla1.setModel(modelo1);
 
         JScrollPane scrollPane = new JScrollPane(tabla1);
@@ -101,18 +101,17 @@ public class Stock extends JFrame {
                 PRODUCTOS producto = new PRODUCTOS(
                         document.getString("Producto"),
                         document.getString("IDproducto"),
-                        document.getInteger("Cantidad", 0),
                         document.getInteger("Stock", 0),
                         document.getDouble("Precio")
                 );
                 modelo1.addRow(new Object[]{
                         producto.getNomprod(),
                         producto.getIDprod(),
-                        producto.getCantidad(),
                         producto.getStock(),
                         producto.getPrecio()
                 });
             }
+            //s
         } catch (Exception ef) {
             ef.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al buscar el producto", null, JOptionPane.WARNING_MESSAGE);
@@ -147,7 +146,7 @@ public class Stock extends JFrame {
                 int añadirStock = Integer.parseInt(Nstock);
                 int nuevoStock = stockactual + añadirStock;
 
-                Document update = new Document("$set", new Document("Stock", nuevoStock).append("Cantidad", nuevoStock));
+                Document update = new Document("$set", new Document("Stock", nuevoStock));
                 UpdateResult result = collection.updateMany(query1, update);
 
                 if (result.getMatchedCount() > 0) {
@@ -158,7 +157,7 @@ public class Stock extends JFrame {
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro el producto", null, JOptionPane.WARNING_MESSAGE);
-            }
+                }
             }catch(Exception ef){
                 ef.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Error al actualizar", null, JOptionPane.WARNING_MESSAGE);

@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class Transaccion extends JFrame {
+    private ReducriStock stockManager;
     public JPanel Mpanel;
     private JTextField Nvendedor;
     private JTextField Tvendedor;
@@ -59,6 +60,7 @@ public class Transaccion extends JFrame {
     private JLabel tcan;
     private JLabel tprec;
     private JButton Rbutton;
+    private JButton calcularButton;
     private Facturas facturasFrame;
 
     private NumberFormat formatter = new DecimalFormat("#0.00");
@@ -70,6 +72,8 @@ public class Transaccion extends JFrame {
         setSize(820, 700);
         setLocationRelativeTo(null);
         setVisible(true);
+
+        stockManager = new ReducriStock();
 
         facturasFrame = new Facturas();
 
@@ -140,36 +144,33 @@ public class Transaccion extends JFrame {
         Gbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+
                 try {
-                    // Verificar si los campos necesarios no están vacíos
                     if (TotalF.getText().isEmpty() || Nvendedor.getText().isEmpty() ||
                             Ncliente.getText().isEmpty() || Nproducto.getText().isEmpty() ||
                             Cantproducto.getText().isEmpty()) {
                         throw new IllegalArgumentException("Por favor, complete todos los campos necesarios.");
                     }
-                    //Obtener el precio del producto
-                    String producto = Nproducto.getText();
-                    double precio = obtenerProductoprecio(producto);
 
-                    //Actualizar el stock
-                    int cantidad = Integer.parseInt(Cantproducto.getText());
-                    ActualizarStock(producto,cantidad);
-
-                    // Crear instancia de DetalleFacturas
                     double total = Double.parseDouble(TotalF.getText());
                     String cajero = Nvendedor.getText();
                     String cliente = Ncliente.getText();
-                    String producto1 = Nproducto.getText();
-                    int cantidad1 = Integer.parseInt(Cantproducto.getText());
-                    DetalleFacturas detalle = new DetalleFacturas(total, cajero, cliente, producto1, cantidad1);
+                    String producto = Nproducto.getText();
+                    int cantidad = Integer.parseInt(Cantproducto.getText());
+                    DetalleFacturas detalle = new DetalleFacturas(total, cajero, cliente, producto, cantidad);
 
-                    // Guardar en MongoDB
                     MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
                     MongoDatabase Products = mongoClient.getDatabase("Usuarios");
                     MongoCollection<org.bson.Document> Prod = Products.getCollection("DetalleFacturas");
 
                     org.bson.Document facturaDocument = detalle.toDocument();
                     Prod.insertOne(facturaDocument);
+
+                    //Reducir stock
+
+                    boolean stockReduced = stockManager.reducirStock(Nproducto.getText(),Integer.parseInt(Cantproducto.getText()));
 
                     // Generar PDF
                     createPdf();
@@ -183,8 +184,7 @@ public class Transaccion extends JFrame {
                             Ncliente.getText(),
                             Nproducto.getText(),
                             Cantproducto.getText(),
-                            TotalF.getText()
-                    };
+                            TotalF.getText()};
 
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), null, JOptionPane.WARNING_MESSAGE);
@@ -268,31 +268,6 @@ public class Transaccion extends JFrame {
 
         document.add(table);
         document.close();
-    }
-    private double obtenerProductoprecio(String productNombre){
-        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-        MongoDatabase database = mongoClient.getDatabase("Usuarios");
-        MongoCollection<org.bson.Document> productCollection = database.getCollection("Productos");
-
-        org.bson.Document query = new org.bson.Document("Nombre", productNombre);
-        org.bson.Document product = productCollection.find(query).first();
-
-        if (product !=null){
-            return product.getDouble("Precio");
-        }else{
-            return 0.0;
-        }
-    }
-
-    private void ActualizarStock(String productNombre, int valor){
-        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-        MongoDatabase database = mongoClient.getDatabase("Usuarios");
-        MongoCollection<org.bson.Document> productos = database.getCollection("Productos");
-
-        org.bson.Document query = new org.bson.Document("Nombre", productNombre);
-        org.bson.Document actualizar = new org.bson.Document("$inc", new org.bson.Document("Stock", valor));
-
-        productos.updateOne(query,actualizar);
     }
 
     public static void main(String[] args) {

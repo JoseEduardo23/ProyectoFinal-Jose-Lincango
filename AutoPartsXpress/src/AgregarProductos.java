@@ -18,7 +18,6 @@ public class AgregarProductos extends JFrame {
     private JTable table1;
     private JTextField Nomprod;
     private JTextField Codprod;
-    private JTextField Cantprod;
     private JTextField Stockprod;
     private JTextField Precioprod;
     private JLabel img1;
@@ -69,7 +68,6 @@ public class AgregarProductos extends JFrame {
 
         Nomprod.setBounds(120,350,150,20);
         Codprod.setBounds(120,385,150,20);
-        Cantprod.setBounds(120,420,150,20);
         Stockprod.setBounds(390,350,150,20);
         Precioprod.setBounds(390,385,150,20);
 
@@ -86,7 +84,7 @@ public class AgregarProductos extends JFrame {
         regresarButton.setBounds(40,637,100,20);
 
         //Crear el modelo de la tabla.
-        modelo = new DefaultTableModel(new Object[]{"Producto","Codigo","Cantidad","Stock","Precio"},0);
+        modelo = new DefaultTableModel(new Object[]{"Producto","Codigo","Stock","Precio"},0);
         table1.setModel(modelo);
 
         JScrollPane scrollPane = new JScrollPane(table1);
@@ -100,11 +98,11 @@ public class AgregarProductos extends JFrame {
                 String Codigo = Codprod.getText();
                 int Stock = Integer.parseInt(Stockprod.getText());
                 double precio;
-                int Cantidad;
+                int Stockp;
 
                 try{
                     precio = Double.parseDouble(Precioprod.getText());
-                    Cantidad = Integer.parseInt(Cantprod.getText());
+                    Stockp = Integer.parseInt(Stockprod.getText());
                 }catch (Exception ej){
                     JOptionPane.showMessageDialog(null,"Debe ingresarse un numero valido",null,JOptionPane.WARNING_MESSAGE);
                     return;
@@ -112,21 +110,19 @@ public class AgregarProductos extends JFrame {
 
                 System.out.println("Producto: " + Producto);
                 System.out.println("Codigo" + Codigo);
-                System.out.println("Cantidad" + Cantidad);
-                System.out.println("Stock:" + Cantidad);
+                System.out.println("Stock:" + Stockp);
                 System.out.println("Precio:" +precio);
 
-                PRODUCTOS productos = new PRODUCTOS(Producto,Codigo,Cantidad,Stock,precio);
+                PRODUCTOS productos = new PRODUCTOS(Producto,Codigo,Stockp,precio);
                 if (!isPRODUCTOSEmpty(productos)){
                     productosList.add(productos);
                     Document prodDoc = productos.toDocument();
                     usuarios.insertOne(prodDoc);
                         JOptionPane.showMessageDialog(null,"Producto Ingresado",null,JOptionPane.INFORMATION_MESSAGE);
-                         modelo.addRow(new Object[]{productos.getNomprod(), productos.getIDprod(),productos.getCantidad(),productos.getStock(),productos.getPrecio()});
+                         modelo.addRow(new Object[]{productos.getNomprod(), productos.getIDprod(),productos.getStock(),productos.getPrecio()});
 
                         Nomprod.setText("");
                         Codprod.setText("");
-                        Cantprod.setText("");
                         Stockprod.setText("");
                         Precioprod.setText("");
                 }else{
@@ -163,8 +159,7 @@ public class AgregarProductos extends JFrame {
         return productos.getNomprod() == null || productos.getNomprod().isEmpty() ||
                 productos.getIDprod() == null || productos.getIDprod().isEmpty() ||
                 productos.getStock() == 0 ||
-                productos.getPrecio() == 0.0 ||
-                productos.getCantidad() == 0;
+                productos.getPrecio() == 0.0;
     }
     public static void main(String[] args) {
         new AgregarProductos();
