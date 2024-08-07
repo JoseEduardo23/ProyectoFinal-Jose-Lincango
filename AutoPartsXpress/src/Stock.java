@@ -81,7 +81,7 @@ public class Stock extends JFrame {
         modelo1.setRowCount(0);
 
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
-            MongoDatabase stock = mongoClient.getDatabase("Usuarios");
+            MongoDatabase stock = mongoClient.getDatabase("AutoPartsXpress");
             MongoCollection<Document> collection = stock.getCollection("Productos");
 
             Document query = new Document();
@@ -128,7 +128,7 @@ public class Stock extends JFrame {
             return;
         }
         try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
-            MongoDatabase stock = mongoClient.getDatabase("Usuarios");
+            MongoDatabase stock = mongoClient.getDatabase("AutoPartsXpress");
             MongoCollection<Document> collection = stock.getCollection("Productos");
 
             Document query1 = new Document();

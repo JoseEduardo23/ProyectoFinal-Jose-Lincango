@@ -57,7 +57,7 @@ public class LogForm3 extends JFrame {
                 String pass = CajerPass.getText();
                 try{
                     MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-                    MongoDatabase database = mongoClient.getDatabase("Usuarios");
+                    MongoDatabase database = mongoClient.getDatabase("AutoPartsXpress");
                     MongoCollection<Document> usuario = database.getCollection("Cajeros");
 
                     Document query1 = new Document("Usuario", user)

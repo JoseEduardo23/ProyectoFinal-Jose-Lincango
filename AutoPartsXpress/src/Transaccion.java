@@ -211,7 +211,7 @@ public class Transaccion extends JFrame {
                     DetalleFacturas detalle = new DetalleFacturas(total, cajero, cliente, producto, cantidad);
 
                     MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-                    MongoDatabase Products = mongoClient.getDatabase("Usuarios");
+                    MongoDatabase Products = mongoClient.getDatabase("AutoPartsXpress");
                     MongoCollection<org.bson.Document> Prod = Products.getCollection("DetalleFacturas");
 
                     org.bson.Document facturaDocument = detalle.toDocument();

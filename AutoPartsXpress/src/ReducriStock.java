@@ -13,7 +13,7 @@ public class ReducriStock extends JFrame {
 
     public ReducriStock() {
         mongoClient = MongoClients.create("mongodb://localhost:27017");
-        database = mongoClient.getDatabase("Usuarios");
+        database = mongoClient.getDatabase("AutoPartsXpress");
         productosCollection = database.getCollection("Productos");
     }
     public int reducirStock(String Nproducto, int cantidad){

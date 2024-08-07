@@ -1,12 +1,8 @@
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import org.bson.Document;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class Facturas extends JFrame {
@@ -42,7 +38,7 @@ public class Facturas extends JFrame {
 
     private void agregarFacturas() {
         MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-        MongoDatabase database = mongoClient.getDatabase("Usuarios");
+        MongoDatabase database = mongoClient.getDatabase("AutoPartsXpress");
         MongoCollection<Document> collection = database.getCollection("DetalleFacturas");
 
         try (MongoCursor<Document> cursor = collection.find().iterator()) {

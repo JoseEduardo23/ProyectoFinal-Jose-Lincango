@@ -42,7 +42,7 @@ public class LogForm2 extends JFrame {
                 String pass = PassAdmin.getText();
                 try {
                     MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-                    MongoDatabase database = mongoClient.getDatabase("Usuarios");
+                    MongoDatabase database = mongoClient.getDatabase("AutoPartsXpress");
                     MongoCollection<Document> usuarios = database.getCollection("Admin");
 
                     Document query = new Document("Usuario", user)

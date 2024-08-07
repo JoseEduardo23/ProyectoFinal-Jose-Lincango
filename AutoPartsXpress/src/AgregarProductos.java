@@ -45,7 +45,7 @@ public class AgregarProductos extends JFrame {
         APpanel.setLayout(null);
 
         MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-        MongoDatabase Products = mongoClient.getDatabase("Usuarios");
+        MongoDatabase Products = mongoClient.getDatabase("AutoPartsXpress");
         MongoCollection<Document> usuarios = Products.getCollection("Productos");
 
         //Diseños

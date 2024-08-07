@@ -38,7 +38,7 @@ public class Agregarusuarios extends JFrame {
         setVisible(true);
 
         MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-        MongoDatabase database = mongoClient.getDatabase("Usuarios");
+        MongoDatabase database = mongoClient.getDatabase("AutoPartsXpress");
         MongoCollection<Document> usuarios = database.getCollection("Cajeros");
 
         BIngreso.addActionListener(new ActionListener() {

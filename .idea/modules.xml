@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AutoPartsXpress/AutoPartsXpress.iml" filepath="$PROJECT_DIR$/AutoPartsXpress/AutoPartsXpress.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JAVADOC/JAVADOC.iml" filepath="$PROJECT_DIR$/JAVADOC/JAVADOC.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ProyectoFinal-Jose-Lincango.iml" filepath="$PROJECT_DIR$/.idea/ProyectoFinal-Jose-Lincango.iml" />
     </modules>
   </component>
